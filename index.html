@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Srijan Gangta | Growth & Performance</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Animated Dark Premium Background */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            background: linear-gradient(-45deg, #050101, #160202, #080101, #1f0202);
+            background-size: 300% 300%;
+            animation: gradientBG 20s ease infinite;
+            color: #f5f5f7;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor */
+        }
+        
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050101; }
+        ::-webkit-scrollbar-thumb { background: #4a0808; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d93838; }
+
+        /* Custom Smooth Mouse Cursors */
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s, opacity 0.3s;
+            mix-blend-mode: difference;
+        }
+        .cursor-outline {
+            width: 36px; height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease-out, opacity 0.3s;
+        }
+        .cursor-key {
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            opacity: 0; scale: 0.5;
+            transition: opacity 0.3s, scale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Navbar */
+        .glass-nav {
+            background: rgba(5, 1, 1, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Playful Skills Pill */
+        .skill-pill {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        .skill-pill:hover {
+            transform: translateY(-8px) scale(1.05) rotate(2deg);
+            background-color: #d93838;
+            color: white;
+            box-shadow: 0 15px 30px rgba(217, 56, 56, 0.4);
+            z-index: 10;
+        }
+
+        /* PERFECT FILE ORGANIZER RACK CSS */
+        .project-section { padding-bottom: 20vh; }
+        .project-wrapper {
+            position: sticky;
+            margin-bottom: 25vh; 
+            will-change: filter; 
+            z-index: var(--z-index); 
+        }
+        .project-card-inner {
+            background: #0d0202; 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(217, 56, 56, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.8);
+            overflow: hidden;
+            display: flex;
+            flex-col;
+        }
+        .folder-header {
+            height: 6vh; 
+            min-height: 50px;
+            background: linear-gradient(to right, #1a0303, #0d0202);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* Magnetic Link Wrapper */
+        .magnetic-wrap { display: inline-block; padding: 10px; cursor: pointer; }
+
+        /* ---------------------------------------------------- */
+        /* SMOOTH CROSSFADE UNLOCK ANIMATION */
+        /* ---------------------------------------------------- */
+        .unlock-icon-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.2em; height: 1.2em;
+            vertical-align: middle;
+        }
+        .unlock-icon-wrap span {
+            position: absolute;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* Default State: Lock is visible, Unlock is hidden & scaled down */
+        .icon-lock { opacity: 1; transform: scale(1) rotate(0deg); }
+        .icon-unlock { opacity: 0; transform: scale(0.5) rotate(-20deg); }
+        
+        /* Hover State: Lock fades out, Unlock pops in with a slight rotation */
+        .group:hover .icon-lock { opacity: 0; transform: scale(0.5) rotate(20deg); }
+        .group:hover .icon-unlock { opacity: 1; transform: scale(1.1) rotate(0deg); }
+
+        /* The Big Lock Section Animation */
+        .big-lock { transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.4s; }
+        .group:hover .big-lock { transform: scale(1.25); text-shadow: 0 0 40px rgba(217, 56, 56, 0.8); }
+
+        /* ---------------------------------------------------- */
+        /* POP AND GLOW TEXT LINK ANIMATION */
+        /* ---------------------------------------------------- */
+        .pop-glow-link {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .pop-glow-link:hover {
+            transform: scale(1.1);
+            color: #ffffff !important;
+            text-shadow: 0 0 15px rgba(217, 56, 56, 0.8), 0 0 30px rgba(217, 56, 56, 0.4);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#d93838] selection:text-white">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="cursor-key">🔑</div>
+
+    <nav class="glass-nav fixed top-0 w-full z-50 px-6 md:px-12 py-5 flex justify-between items-center hero-nav opacity-0">
+        <a href="#" class="font-serif text-xl font-bold tracking-widest text-white">S.G<span class="text-[#d93838]">.</span></a>
+        <div class="hidden md:flex gap-10 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
+            <a href="#about" class="hover:text-white transition-colors">About</a>
+            <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+            <a href="#projects" class="hover:text-white transition-colors">Works</a>
+        </div>
+        <a href="#contact" class="group flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest hover:text-[#d93838] transition-colors">
+            <div class="unlock-icon-wrap text-base">
+                <span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span>
+            </div>
+            Let's Talk
+        </a>
+    </nav>
+
+    <section id="hero" class="min-h-screen w-full relative flex items-center justify-center pt-24 pb-12 overflow-hidden px-6 md:px-20" style="perspective: 1000px;">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#1a0303] via-transparent to-transparent -z-20 opacity-60"></div>
+
+        <div class="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 z-10 relative mt-10 md:mt-0">
+            <div class="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left z-20">
+                <p class="hero-tagline text-[#d93838] tracking-[0.3em] text-[10px] md:text-xs uppercase font-bold mb-4">Digital Architect & Strategist</p>
+                
+                <h1 class="hero-title font-serif text-6xl md:text-[5.5rem] lg:text-[7rem] font-bold text-white tracking-tighter leading-[0.9] mb-6">
+                    Srijan <br><span class="italic text-[#d93838]">Gangta.</span>
+                </h1>
+                
+                <p class="hero-desc text-gray-400 text-sm md:text-base leading-relaxed max-w-md mb-12">
+                    Scaling brands through high-performance marketing, data-driven SEO, and immersive frontend web experiences.
+                </p>
+                
+                <div class="hero-btn">
+                    <div class="magnetic-wrap">
+                        <a href="resume.pdf" download="Srijan_Gangta_Resume.pdf" class="magnetic-item flex items-center gap-3 px-8 py-4 rounded-full border border-[#d93838]/40 bg-[#d93838]/10 hover:bg-[#d93838] text-white text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(217,56,56,0.2)] hover:shadow-[0_0_30px_rgba(217,56,56,0.6)] backdrop-blur-sm group">
+                            <span>Download Resume</span>
+                            <div class="unlock-icon-wrap text-lg">
+                                <span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 flex justify-center md:justify-end z-10">
+                <div class="hero-img-wrapper relative w-[85%] max-w-[320px] md:max-w-[400px] aspect-[3/4] rounded-t-[1000px] rounded-b-[20px] overflow-hidden">
+                    <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#080101] to-transparent z-20"></div>
+                    <img src="profile.png" alt="Srijan Gangta" class="relative z-10 w-full h-full object-cover object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)] filter contrast-[1.1] brightness-[0.95]">
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 animate-bounce cursor-pointer opacity-60 hover:opacity-100 transition-opacity" onclick="document.getElementById('about').scrollIntoView();">
+            <span class="text-[9px] tracking-[0.2em] uppercase mb-2 text-white">Scroll Down</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-[#d93838] to-transparent"></div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 px-6 md:px-20 relative z-30">
+        <div class="max-w-4xl mx-auto md:text-center p-8 md:p-16 rounded-[2.5rem] bg-[#0a0101]/50 border border-white/5 gs-fade-up">
+            <p class="text-[#d93838] tracking-[0.2em] uppercase text-xs font-semibold mb-8">The Philosophy</p>
+            <p class="text-2xl md:text-5xl leading-[1.2] text-white font-medium mb-8 tracking-tight">
+                Growth isn't just about running ads.<br>
+                It's a <span class="italic font-serif text-[#d93838]">system</span> of strategy, data, and continuous optimization.
+            </p>
+            <p class="text-base md:text-lg leading-relaxed text-gray-400 font-light max-w-2xl mx-auto">
+                I operate at the intersection of marketing, analytics, and frontend development. By connecting technical SEO, high-converting Meta/Google Ads, and immersive web experiences, I build digital engines that scale over the long term.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills" class="py-32 px-4 md:px-12 relative z-30 bg-[#080101]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 gs-fade-up">
+                <p class="text-[#d93838] tracking-[0.2em] uppercase text-xs font-semibold mb-4">The Arsenal</p>
+                <h3 class="font-serif text-4xl md:text-6xl text-white tracking-tighter">Everything I bring to the <span class="italic text-[#d93838]">Table</span></h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-[#0a0101] border border-white/5 rounded-3xl p-8 gs-fade-up shadow-2xl hover-zone">
+                    <h4 class="text-white font-serif text-2xl mb-6 border-b border-white/5 pb-4">Performance</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Performance Marketing</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Meta Ads</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Google Ads</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Facebook Ads</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Lead Generation</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Conversion Opt.</span>
+                    </div>
+                </div>
+
+                <div class="bg-[#0a0101] border border-white/5 rounded-3xl p-8 gs-fade-up shadow-2xl hover-zone" data-delay="0.1">
+                    <h4 class="text-white font-serif text-2xl mb-6 border-b border-white/5 pb-4">Search Opt.</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Technical SEO</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">On-Page SEO</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Meta SEO</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">SEO Auditing</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Indexing Opt.</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">GSC</span>
+                    </div>
+                </div>
+
+                <div class="bg-[#0a0101] border border-white/5 rounded-3xl p-8 gs-fade-up shadow-2xl hover-zone" data-delay="0.2">
+                    <h4 class="text-white font-serif text-2xl mb-6 border-b border-white/5 pb-4">Frontend & Web</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Frontend Dev</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">UI/UX Opt.</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Web Design</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Landing Pages</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">HTML / CSS / JS</span>
+                    </div>
+                </div>
+
+                <div class="bg-[#0a0101] border border-white/5 rounded-3xl p-8 gs-fade-up shadow-2xl hover-zone" data-delay="0.3">
+                    <h4 class="text-white font-serif text-2xl mb-6 border-b border-white/5 pb-4">Data & Content</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">GA4 Analytics</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Creative Strategy</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">Content Strategy</span>
+                        <span class="skill-pill px-4 py-2 rounded-xl text-xs font-medium text-gray-300">AI Content</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="project-section pt-32 px-4 md:px-12 max-w-6xl mx-auto relative z-30">
+        <div class="mb-24 px-4 text-center md:text-left gs-fade-up">
+            <h3 class="font-serif text-5xl md:text-7xl text-white tracking-tighter">Featured <span class="italic text-[#d93838]">Works</span></h3>
+            <p class="text-gray-400 mt-4 text-sm tracking-widest uppercase">Scroll to explore the rack</p>
+        </div>
+
+        <div class="project-wrapper" style="top: 12vh; --z-index: 1;">
+            <div class="project-card-inner flex flex-col">
+                <div class="folder-header">
+                    <span class="text-[#d93838] font-serif italic text-lg mr-3">01</span>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Bright Career Academy</span>
+                </div>
+                <div class="p-6 md:p-12 flex flex-col md:flex-row gap-10 items-center justify-between hover-zone">
+                    <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
+                        <h4 class="font-medium text-3xl md:text-5xl text-white mb-6 tracking-tight">Landing Page & CRO</h4>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8">Optimized a highly responsive landing page focused on improving user experience, engagement, and direct lead conversion.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Frontend</span>
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">CRO</span>
+                        </div>
+                        <a href="https://courses.brightcareeracademy.in" target="_blank" class="magnetic-item pop-glow-link w-max mt-auto flex items-center gap-2 text-[#d93838] hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                            View Live Project ↗
+                        </a>
+                    </div>
+                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-wrapper" style="top: 18vh; --z-index: 2;">
+            <div class="project-card-inner flex flex-col">
+                <div class="folder-header">
+                    <span class="text-[#d93838] font-serif italic text-lg mr-3">02</span>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Growth Campaigns</span>
+                </div>
+                <div class="p-6 md:p-12 flex flex-col md:flex-row-reverse gap-10 items-center justify-between hover-zone">
+                    <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
+                        <h4 class="font-medium text-3xl md:text-5xl text-white mb-6 tracking-tight">Lead Generation System</h4>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8">Generated 47 verified leads from a lean ₹3.7k budget within 20 days. Heavily analyzed and optimized CPM, CPC, CTR, and CPL metrics.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Meta Ads</span>
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Google Ads</span>
+                        </div>
+                        <a href="#" class="magnetic-item pop-glow-link w-max mt-auto flex items-center gap-2 text-[#d93838] hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                            View Case Study ↗
+                        </a>
+                    </div>
+                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-wrapper" style="top: 24vh; --z-index: 3;">
+            <div class="project-card-inner flex flex-col">
+                <div class="folder-header">
+                    <span class="text-[#d93838] font-serif italic text-lg mr-3">03</span>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Bright Career Venture</span>
+                </div>
+                <div class="p-6 md:p-12 flex flex-col md:flex-row gap-10 items-center justify-between hover-zone">
+                    <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
+                        <h4 class="font-medium text-3xl md:text-5xl text-white mb-6 tracking-tight">Full Stack Web & SEO</h4>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8">Designed and developed the entire portal architecture while establishing core technical SEO, indexing, and scalable site structure.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Web Dev</span>
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Technical SEO</span>
+                        </div>
+                        <a href="https://brightcareerventure.com" target="_blank" class="magnetic-item pop-glow-link w-max mt-auto flex items-center gap-2 text-[#d93838] hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                            View Live Project ↗
+                        </a>
+                    </div>
+                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-wrapper" style="top: 30vh; --z-index: 4; margin-bottom: 5vh;">
+            <div class="project-card-inner flex flex-col">
+                <div class="folder-header">
+                    <span class="text-[#d93838] font-serif italic text-lg mr-3">04</span>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">IICE Shimla</span>
+                </div>
+                <div class="p-6 md:p-12 flex flex-col md:flex-row-reverse gap-10 items-center justify-between hover-zone">
+                    <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
+                        <h4 class="font-medium text-3xl md:text-5xl text-white mb-6 tracking-tight">Optimization & Ads</h4>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8">Comprehensive SEO overhaul. Improved site visibility, indexing, and overall performance while simultaneously handling targeting ad campaigns.</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">SEO Auditing</span>
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Campaigns</span>
+                        </div>
+                        <a href="https://iiceshimla.in" target="_blank" class="magnetic-item pop-glow-link w-max mt-auto flex items-center gap-2 text-[#d93838] hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                            View Live Project ↗
+                        </a>
+                    </div>
+                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w-full flex justify-center py-10 relative z-30 gs-fade-up">
+        <a href="#archive" class="group flex items-center gap-4 px-10 py-5 rounded-full border border-white/20 bg-[#0a0101] hover:bg-[#d93838] text-white text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:shadow-[0_0_30px_rgba(217,56,56,0.6)] transform hover:-translate-y-1">
+            <span>Explore Full Archive</span>
+            <div class="unlock-icon-wrap text-xl"><span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span></div>
+        </a>
+    </div>
+
+    <section id="archive" class="py-24 px-6 md:px-20 relative z-30 border-t border-white/5 bg-[#050101]">
+        <div class="max-w-5xl mx-auto">
+            <h3 class="font-serif text-4xl md:text-6xl text-white mb-16 text-center tracking-tighter gs-fade-up">Project <span class="italic text-[#d93838]">Archive</span></h3>
+            
+            <div class="flex flex-col border-t border-white/10 gs-fade-up">
+                <a href="https://courses.brightcareeracademy.in" target="_blank" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">01</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Bright Career Academy Courses</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Landing Page</span>
+                    </div>
+                </a>
+                <a href="#" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">02</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Growth Campaigns</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Meta & Google Ads</span>
+                    </div>
+                </a>
+                <a href="https://brightcareerventure.com" target="_blank" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">03</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Bright Career Venture</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Full Stack / SEO</span>
+                    </div>
+                </a>
+                <a href="https://iiceshimla.in" target="_blank" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">04</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">IICE Shimla Optimization</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Technical SEO</span>
+                    </div>
+                </a>
+                <a href="https://brighttechhub.in" target="_blank" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">05</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Bright Tech Hub</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Web Design / SEO</span>
+                    </div>
+                </a>
+                <a href="#" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">06</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Vedanshi Pixel India</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">On-Page SEO</span>
+                    </div>
+                </a>
+                <a href="https://digitalmarketingcourse.iiceshimla.in" target="_blank" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">07</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Digital Marketing Platform</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Content Strategy</span>
+                    </div>
+                </a>
+                <a href="https://rampurbushahr.iiceshimla.in" target="_blank" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">08</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Rampur Bushahr IICE</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">UI/UX Opt.</span>
+                    </div>
+                </a>
+                <a href="https://brightcareeracademy.in" target="_blank" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
+                    <div class="flex items-center gap-6 w-full md:w-1/2">
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">09</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Bright Career Academy (SEO)</h4>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
+                        <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Meta Tags Opt.</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="pt-32 pb-10 px-6 md:px-20 relative overflow-hidden z-40 bg-[#050101] border-t border-white/5 mt-10">
+        <div class="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[60vw] h-[300px] bg-[#d93838]/20 blur-[150px] pointer-events-none rounded-full"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10 gs-fade-up">
+            <h2 class="font-serif text-5xl md:text-[7rem] leading-[0.9] mb-8 text-white tracking-tighter">LET'S <span class="italic text-[#d93838]">CONNECT</span></h2>
+            
+            <h3 class="text-[10px] md:text-sm font-bold tracking-[0.2em] uppercase text-gray-400 mb-12">
+                Tap and Unlock to hire me to unlock my full potential
+            </h3>
+            
+            <div class="relative flex justify-center items-center mb-20 group" id="hire-me-badge">
+                <div class="text-6xl md:text-8xl text-white flex items-center justify-center transition-transform duration-500 big-lock pointer-events-none">
+                    <div class="unlock-icon-wrap w-[1.2em] h-[1.2em]">
+                        <span class="icon-lock">🔒</span>
+                        <span class="icon-unlock">🔓</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 mt-4">
+                <div class="magnetic-wrap">
+                    <a href="mailto:your.email@gmail.com" class="magnetic-item pop-glow-link group flex items-center text-xl md:text-3xl text-gray-400 font-serif italic">
+                        <div class="unlock-icon-wrap text-lg md:text-2xl mr-3"><span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span></div>
+                        Email
+                    </a>
+                </div>
+                <div class="magnetic-wrap">
+                    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="magnetic-item pop-glow-link group flex items-center text-xl md:text-3xl text-gray-400 font-serif italic">
+                        <div class="unlock-icon-wrap text-lg md:text-2xl mr-3"><span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span></div>
+                        WhatsApp
+                    </a>
+                </div>
+                <div class="magnetic-wrap">
+                    <a href="https://linkedin.com/in/srijan-gangta" target="_blank" class="magnetic-item pop-glow-link group flex items-center text-xl md:text-3xl text-gray-400 font-serif italic">
+                        <div class="unlock-icon-wrap text-lg md:text-2xl mr-3"><span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span></div>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-32 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-[10px] tracking-[0.2em] uppercase">
+                <span>© 2026 Srijan Gangta</span>
+                <span class="mt-4 md:mt-0">Shimla, India</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. CINEMATIC HERO ANIMATION
+        let heroTl = gsap.timeline();
+        heroTl.fromTo(".hero-tagline", { filter: "blur(10px)", opacity: 0, x: -20 }, { filter: "blur(0px)", opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.2 })
+        .fromTo(".hero-title", { filter: "blur(20px)", opacity: 0, scale: 1.1 }, { filter: "blur(0px)", opacity: 1, scale: 1, duration: 1.5, ease: "expo.out" }, "-=0.5")
+        .fromTo(".hero-desc", { filter: "blur(10px)", opacity: 0, y: 20 }, { filter: "blur(0px)", opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=1")
+        .fromTo(".hero-btn", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
+        .fromTo(".hero-img-wrapper", { rotationX: 45, opacity: 0, y: 100, transformPerspective: 1000 }, { rotationX: 0, opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }, "-=1.2")
+        .to(".hero-nav", { opacity: 1, duration: 1 }, "-=1");
+
+        // 2. CUSTOM CURSOR LOGIC (The KEY Effect)
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const cursorKey = document.querySelector('.cursor-key');
+        const footerSection = document.getElementById('contact');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            // Standard Cursor movement
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 400, fill: "forwards" });
+            
+            // Key Cursor movement
+            cursorKey.style.left = `${posX}px`; cursorKey.style.top = `${posY}px`;
+        });
+
+        // Change cursor to KEY when hovering the footer
+        footerSection.addEventListener('mouseenter', () => {
+            cursorDot.style.opacity = '0';
+            cursorOutline.style.opacity = '0';
+            cursorKey.style.opacity = '1';
+            cursorKey.style.scale = '1';
+        });
+        footerSection.addEventListener('mouseleave', () => {
+            cursorDot.style.opacity = '1';
+            cursorOutline.style.opacity = '1';
+            cursorKey.style.opacity = '0';
+            cursorKey.style.scale = '0.5';
+        });
+
+        // Cursor scaling for links
+        document.querySelectorAll('a, .hover-zone, .magnetic-item').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if(cursorDot.style.opacity !== '0') {
+                    cursorDot.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                    cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                    cursorOutline.style.backgroundColor = 'rgba(255,255,255,0.05)';
+                }
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // 3. Smooth Magnetic Link Engine
+        document.querySelectorAll('.magnetic-item').forEach(item => {
+            item.addEventListener('mousemove', (e) => {
+                const position = item.getBoundingClientRect();
+                const x = e.pageX - position.left - position.width / 2;
+                const y = e.pageY - position.top - position.height / 2;
+                gsap.to(item, { x: x * 0.4, y: y * 0.4, duration: 0.5, ease: "power3.out" });
+            });
+            item.addEventListener('mouseleave', () => {
+                gsap.to(item, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.4)" });
+            });
+        });
+
+        // 4. Navbar Background reveal
+        const nav = document.querySelector('.glass-nav');
+        window.addEventListener('scroll', () => {
+            nav.style.background = window.scrollY > 50 ? 'rgba(5, 1, 1, 0.8)' : 'rgba(5, 1, 1, 0.4)';
+        });
+
+        // 5. Scroll Fade Up
+        gsap.utils.toArray('.gs-fade-up').forEach(elem => {
+            let delay = elem.getAttribute('data-delay') || 0;
+            gsap.fromTo(elem, { autoAlpha: 0, y: 50 }, { duration: 1, autoAlpha: 1, y: 0, ease: "power3.out", delay: parseFloat(delay), scrollTrigger: { trigger: elem, start: "top 85%" } });
+        });
+
+        // 6. SOLID FOLDER RACK STACK ANIMATION
+        const cards = gsap.utils.toArray('.project-wrapper');
+        cards.forEach((card, i) => {
+            gsap.from(card, { y: 150, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 95%", end: "top 75%", scrub: 0.5 } });
+            if (i < cards.length - 1) {
+                gsap.to(card, {
+                    rotationX: -8, filter: "brightness(0.4)", transformOrigin: "bottom center",
+                    scrollTrigger: { trigger: cards[i + 1], start: "top 85%", end: "top 15%", scrub: true }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
