@@ -29,7 +29,6 @@
             color: #f5f5f7;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            cursor: none; /* Hide default cursor */
         }
         
         .font-serif { font-family: 'Playfair Display', serif; }
@@ -40,24 +39,7 @@
         ::-webkit-scrollbar-thumb { background: #4a0808; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #d93838; }
 
-        /* Custom Smooth Mouse Cursors */
-        .cursor-dot {
-            width: 8px; height: 8px;
-            background-color: white;
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.2s, opacity 0.3s;
-            mix-blend-mode: difference;
-        }
-        .cursor-outline {
-            width: 36px; height: 36px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease-out, opacity 0.3s;
-        }
+        /* Custom Key Cursor (Only visible in Contact Section) */
         .cursor-key {
             position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
             transform: translate(-50%, -50%);
@@ -88,6 +70,33 @@
             color: white;
             box-shadow: 0 15px 30px rgba(217, 56, 56, 0.4);
             z-index: 10;
+        }
+
+        /* ---------------------------------------------------- */
+        /* TONY STARK 3D HOLOGRAPHIC CERTIFICATES CSS */
+        /* ---------------------------------------------------- */
+        .cert-glass-panel {
+            background: rgba(10, 1, 1, 0.8);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(217, 56, 56, 0.1);
+        }
+        /* Touch actions enabled for smooth swipe */
+        .touch-pan-y {
+            touch-action: pan-y pinch-zoom;
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(500%); opacity: 0; }
+        }
+        .hologram-scan {
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 10%;
+            background: linear-gradient(to bottom, transparent, rgba(217, 56, 56, 0.5), transparent);
+            animation: scanline 3s linear infinite;
+            z-index: 20;
+            pointer-events: none;
         }
 
         /* PERFECT FILE ORGANIZER RACK CSS */
@@ -164,8 +173,6 @@
 </head>
 <body class="antialiased selection:bg-[#d93838] selection:text-white">
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
     <div class="cursor-key">🔑</div>
 
     <nav class="glass-nav fixed top-0 w-full z-50 px-6 md:px-12 py-5 flex justify-between items-center hero-nav opacity-0">
@@ -173,6 +180,7 @@
         <div class="hidden md:flex gap-10 text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
             <a href="#about" class="pop-glow">About</a>
             <a href="#skills" class="pop-glow">Skills</a>
+            <a href="#certificates-section" class="pop-glow">Credentials</a>
             <a href="#projects" class="pop-glow">Works</a>
         </div>
         <a href="#contact" class="group flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest pop-glow">
@@ -237,7 +245,7 @@
         </div>
     </section>
 
-    <section id="skills" class="py-32 px-4 md:px-12 relative z-30 bg-[#080101]">
+    <section id="skills" class="py-32 px-4 md:px-12 relative z-30 bg-[#080101] border-b border-[#d93838]/10">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20 gs-fade-up">
                 <p class="text-[#d93838] tracking-[0.2em] uppercase text-xs font-semibold mb-4">The Arsenal</p>
@@ -295,6 +303,73 @@
         </div>
     </section>
 
+    <section id="certificates-section" class="py-24 px-6 md:px-20 relative bg-[#050101] border-b border-white/5 overflow-hidden flex flex-col items-center">
+        <div class="absolute w-[80vw] h-[80vw] bg-[#d93838]/10 blur-[150px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"></div>
+        
+        <div class="text-center w-full z-30 mb-12 gs-fade-up">
+            <p class="text-[#d93838] tracking-[0.3em] uppercase text-xs font-bold mb-4">Official Credentials</p>
+            <h3 class="font-serif text-5xl md:text-7xl text-white tracking-tighter drop-shadow-2xl">Google <span class="italic text-[#d93838]">Certified</span></h3>
+        </div>
+
+        <div class="relative w-[95vw] md:w-[75vw] lg:w-[65vw] h-[75vh] md:h-[50vh] z-20 mx-auto gs-fade-up touch-pan-y" id="cert-stack-container" style="perspective: 1500px;">
+            
+            <div class="absolute top-0 left-0 w-full h-full cert-slide" id="cert-card-1">
+                <div class="w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="w-full md:w-[45%] h-[35%] md:h-full p-4 md:p-6">
+                        <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl">
+                            <div class="hologram-scan"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
+                            <img src="cert1.png" alt="Google Ads Cert" class="w-full h-full object-cover relative z-0 filter contrast-125 saturate-110">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-[55%] h-[65%] md:h-full p-6 md:p-10 flex flex-col justify-center relative">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-4 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Ads Search<br><span class="italic text-gray-400 text-lg md:text-xl">Certification</span></h4>
+                        <p class="text-gray-400 text-[11px] md:text-sm mb-6 mt-4 max-w-sm leading-relaxed">Recognized mastery in building, executing, and optimizing Google Search campaigns. Proven ability to architect strategies that drive measurable performance.</p>
+                        <a href="#" class="pop-glow text-[#d93838] font-bold text-[10px] md:text-xs uppercase tracking-widest w-max mt-auto">Verify Credential ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute top-0 left-0 w-full h-full cert-slide" id="cert-card-2">
+                <div class="w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="w-full md:w-[45%] h-[35%] md:h-full p-4 md:p-6">
+                        <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl">
+                            <div class="hologram-scan"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
+                            <img src="cert2.png" alt="Google Analytics Cert" class="w-full h-full object-cover relative z-0 filter contrast-125 saturate-110">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-[55%] h-[65%] md:h-full p-6 md:p-10 flex flex-col justify-center relative">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-4 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Analytics 4<br><span class="italic text-gray-400 text-lg md:text-xl">Certification</span></h4>
+                        <p class="text-gray-400 text-[11px] md:text-sm mb-6 mt-4 max-w-sm leading-relaxed">Official validation of advanced proficiency in leveraging GA4 to analyze digital behavior, track multi-channel funnels, and derive actionable growth insights.</p>
+                        <a href="#" class="pop-glow text-[#d93838] font-bold text-[10px] md:text-xs uppercase tracking-widest w-max mt-auto">Verify Credential ↗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center gap-6 mt-12 z-30 gs-fade-up">
+            <button id="cert-prev" class="w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-[#d93838] hover:border-[#d93838] flex items-center justify-center transition-all duration-300 pop-glow">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button id="cert-next" class="w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-[#d93838] hover:border-[#d93838] flex items-center justify-center transition-all duration-300 pop-glow">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </section>
+
     <section id="projects" class="project-section pt-32 px-4 md:px-12 max-w-6xl mx-auto relative z-30">
         <div class="mb-24 px-4 text-center md:text-left gs-fade-up">
             <h3 class="font-serif text-5xl md:text-7xl text-white tracking-tighter">Featured <span class="italic text-[#d93838]">Works</span></h3>
@@ -305,7 +380,7 @@
             <div class="project-card-inner flex flex-col">
                 <div class="folder-header">
                     <span class="text-[#d93838] font-serif italic text-lg mr-3">01</span>
-                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Google Ads Lead Generation Campaign</span>
+                    <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-[0.2em] truncate">Google Ads Lead Gen Campaign</span>
                 </div>
                 <div class="p-6 md:p-12 flex flex-col md:flex-row gap-10 items-center justify-between">
                     <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
@@ -313,11 +388,7 @@
                         <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8"> Achieved 28 targeted clicks with 672 impressions while maintaining an average CPC of ₹13.84 within a controlled budget</p>
                         <div class="flex flex-wrap gap-2 mb-8">
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Campaign Strategy</span>
-                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Lead Generation</span>
-                        </div>
-                        
-                        <div class="mt-auto">
-                            
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Lead Gen</span>
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
@@ -331,7 +402,7 @@
             <div class="project-card-inner flex flex-col">
                 <div class="folder-header">
                     <span class="text-[#d93838] font-serif italic text-lg mr-3">02</span>
-                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Meta Ad Campaign</span>
+                    <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-[0.2em] truncate">Meta Ad Campaign</span>
                 </div>
                 <div class="p-6 md:p-12 flex flex-col md:flex-row-reverse gap-10 items-center justify-between">
                     <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
@@ -340,10 +411,6 @@
                         <div class="flex flex-wrap gap-2 mb-8">
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Meta Ads</span>
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Funnel Strategies</span>
-                        </div>
-                        
-                        <div class="mt-auto">
-                         
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
@@ -357,7 +424,7 @@
             <div class="project-card-inner flex flex-col">
                 <div class="folder-header">
                     <span class="text-[#d93838] font-serif italic text-lg mr-3">03</span>
-                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Landing Page Optimization</span>
+                    <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-[0.2em] truncate">Landing Page Optimization</span>
                 </div>
                 <div class="p-6 md:p-12 flex flex-col md:flex-row gap-10 items-center justify-between">
                     <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
@@ -367,9 +434,8 @@
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Web Dev</span>
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Technical SEO</span>
                         </div>
-                        
                         <div class="mt-auto">
-                            <a href="https://courses.brightcareeracademy.com" target="_blank" class="text-[#d93838] hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                            <a href="https://courses.brightcareeracademy.com" target="_blank" class="text-[#d93838] pop-glow font-bold text-xs uppercase tracking-widest transition-colors duration-300">
                                 View Live Project ↗
                             </a>
                         </div>
@@ -385,7 +451,7 @@
             <div class="project-card-inner flex flex-col">
                 <div class="folder-header">
                     <span class="text-[#d93838] font-serif italic text-lg mr-3">04</span>
-                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Bright Career Venture</span>
+                    <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-[0.2em] truncate">Bright Career Venture</span>
                 </div>
                 <div class="p-6 md:p-12 flex flex-col md:flex-row-reverse gap-10 items-center justify-between">
                     <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
@@ -395,9 +461,8 @@
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Web Dev</span>
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Technical SEO</span>
                         </div>
-                        
                         <div class="mt-auto">
-                            <a href="https://brightcareerventure.com" target="_blank" class="text-[#d93838] hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300">
+                            <a href="https://brightcareerventure.com" target="_blank" class="text-[#d93838] pop-glow font-bold text-xs uppercase tracking-widest transition-colors duration-300">
                                 View Live Project ↗
                             </a>
                         </div>
@@ -432,8 +497,8 @@
                 </a>
                 <a href="#" class="group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/10 hover:bg-white/5 transition-colors px-4 rounded-lg cursor-pointer">
                     <div class="flex items-center gap-6 w-full md:w-1/2">
-                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">CRO</span>
-                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">CTO</h4>
+                        <span class="text-[#d93838] font-serif italic text-lg opacity-50 group-hover:opacity-100 transition-opacity">02</span>
+                        <h4 class="text-lg md:text-xl text-white font-medium group-hover:text-[#d93838] transition-colors">Growth Campaigns</h4>
                     </div>
                     <div class="mt-4 md:mt-0 flex flex-wrap gap-2 w-full md:w-1/3">
                         <span class="text-[10px] text-gray-400 border border-gray-600 px-2 py-1 rounded-md uppercase">Meta & Google Ads</span>
@@ -516,19 +581,20 @@
                 Tap and Unlock to hire me to unlock my full potential
             </h3>
             
-         <div class="relative w-full flex justify-center z-50 mb-20">
-    <a href="mailto:gangtasrijan2005@gmail.com" class="group cursor-pointer flex justify-center items-center" id="hire-me-badge">
-        <div class="text-6xl md:text-8xl text-white flex items-center justify-center big-lock pointer-events-none">
-            <div class="unlock-wrapper w-[1.2em] h-[1.2em]">
-                <span class="icon-lock">🔒</span>
-                <span class="icon-unlock">🔓</span>
+            <div class="relative w-full flex justify-center z-50 mb-20">
+                <a href="mailto:gangtasrijan2005@gmail.com" class="group cursor-pointer flex justify-center items-center" id="hire-me-badge">
+                    <div class="text-6xl md:text-8xl text-white flex items-center justify-center big-lock pointer-events-none">
+                        <div class="unlock-wrapper w-[1.2em] h-[1.2em]">
+                            <span class="icon-lock">🔒</span>
+                            <span class="icon-unlock">🔓</span>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </div>
-    </a>
-</div>
+            
             <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 mt-4">
                 <div class="group flex items-center justify-center">
-                    <a href="mailto:gangtasrijan2005@gmail.com" class="flex items-center text-xl md:text-3xl text-gray-400 hover:text-white font-serif italic transition-colors duration-300">
+                    <a href="mailto:gangtasrijan2005@gmail.com" class="flex items-center text-xl md:text-3xl text-gray-400 hover:text-white font-serif italic transition-colors duration-300 pop-glow">
                         <div class="unlock-wrapper text-lg md:text-2xl mr-3">
                             <span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span>
                         </div>
@@ -536,7 +602,7 @@
                     </a>
                 </div>
                 <div class="group flex items-center justify-center">
-                    <a href="https://linkedin.com/in/srijan-gangta" target="_blank" class="flex items-center text-xl md:text-3xl text-gray-400 hover:text-white font-serif italic transition-colors duration-300">
+                    <a href="https://linkedin.com/in/srijan-gangta" target="_blank" class="flex items-center text-xl md:text-3xl text-gray-400 hover:text-white font-serif italic transition-colors duration-300 pop-glow">
                         <div class="unlock-wrapper text-lg md:text-2xl mr-3">
                             <span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span>
                         </div>
@@ -544,11 +610,10 @@
                     </a>
                 </div>
             </div>
-            
-            <div class="mt-32 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-[10px] tracking-[0.2em] uppercase">
-                <span>© 2026 Srijan Gangta</span>
-                <span class="mt-4 md:mt-0">Shimla, India</span>
-            </div>
+        </div>
+        
+        <div style="text-align:center; padding-top:40px; margin-top: 40px; color:#6b7280; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 10;">
+            ©️ 2026 Srijan Gangta. All Rights Reserved. | Shimla, India
         </div>
     </footer>
 
@@ -564,38 +629,31 @@
         .fromTo(".hero-img-wrapper", { rotationX: 45, opacity: 0, y: 100, transformPerspective: 1000 }, { rotationX: 0, opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }, "-=1.2")
         .to(".hero-nav", { opacity: 1, duration: 1 }, "-=1");
 
-        // 2. CUSTOM CURSOR LOGIC (The KEY Effect)
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+        // 2. KEY CURSOR LOGIC ONLY IN FOOTER 
         const cursorKey = document.querySelector('.cursor-key');
         const footerSection = document.getElementById('contact');
 
         window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            // Standard Cursor movement
-            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
-            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 400, fill: "forwards" });
-            
-            // Key Cursor movement
-            cursorKey.style.left = `${posX}px`; cursorKey.style.top = `${posY}px`;
+            cursorKey.style.left = `${e.clientX}px`; 
+            cursorKey.style.top = `${e.clientY}px`;
         });
 
-        // Change cursor to KEY when hovering the footer
         footerSection.addEventListener('mouseenter', () => {
-            cursorDot.style.opacity = '0';
-            cursorOutline.style.opacity = '0';
             cursorKey.style.opacity = '1';
             cursorKey.style.scale = '1';
-            footerSection.style.cursor = 'none'; // Hides system pointer
+            footerSection.style.cursor = 'none'; 
+            
+            const children = footerSection.querySelectorAll('*');
+            children.forEach(child => child.style.cursor = 'none');
         });
+        
         footerSection.addEventListener('mouseleave', () => {
-            cursorDot.style.opacity = '1';
-            cursorOutline.style.opacity = '1';
             cursorKey.style.opacity = '0';
             cursorKey.style.scale = '0.5';
-            footerSection.style.cursor = 'auto'; // Restores system pointer
+            footerSection.style.cursor = 'auto'; 
+            
+            const children = footerSection.querySelectorAll('*');
+            children.forEach(child => child.style.cursor = '');
         });
 
         // 3. Navbar Background reveal
@@ -610,7 +668,57 @@
             gsap.fromTo(elem, { autoAlpha: 0, y: 50 }, { duration: 1, autoAlpha: 1, y: 0, ease: "power3.out", delay: parseFloat(delay), scrollTrigger: { trigger: elem, start: "top 85%" } });
         });
 
-        // 5. SOLID FOLDER RACK STACK ANIMATION
+        // 5. TONY STARK 3D CERTIFICATE SLIDER (WITH TOUCH SWIPE & BUTTONS)
+        let isCert1Active = true;
+        const cert1 = document.getElementById('cert-card-1');
+        const cert2 = document.getElementById('cert-card-2');
+        const nextBtn = document.getElementById('cert-next');
+        const prevBtn = document.getElementById('cert-prev');
+        const certSliderContainer = document.getElementById('cert-stack-container');
+
+        // Check if mobile for dynamic offset
+        const isMobile = window.innerWidth < 768;
+        const xOffset = isMobile ? "8%" : "15%";
+
+        gsap.set(cert1, { transformPerspective: 1500 });
+        gsap.set(cert2, { transformPerspective: 1500 });
+
+        function updateCertSlider() {
+            if (isCert1Active) {
+                // Cert 1 Front, Cert 2 Back Right
+                gsap.to(cert1, { x: "0%", scale: 1, rotationY: 0, filter: "brightness(1)", opacity: 1, zIndex: 20, duration: 0.8, ease: "power3.inOut" });
+                gsap.to(cert2, { x: xOffset, scale: 0.9, rotationY: -15, filter: "brightness(0.3)", opacity: 0.6, zIndex: 10, duration: 0.8, ease: "power3.inOut" });
+            } else {
+                // Cert 2 Front, Cert 1 Back Left
+                gsap.to(cert1, { x: `-${xOffset}`, scale: 0.9, rotationY: 15, filter: "brightness(0.3)", opacity: 0.6, zIndex: 10, duration: 0.8, ease: "power3.inOut" });
+                gsap.to(cert2, { x: "0%", scale: 1, rotationY: 0, filter: "brightness(1)", opacity: 1, zIndex: 20, duration: 0.8, ease: "power3.inOut" });
+            }
+        }
+        
+        // Trigger initial state
+        updateCertSlider();
+
+        // Button Clicks
+        nextBtn.addEventListener('click', () => { isCert1Active = !isCert1Active; updateCertSlider(); });
+        prevBtn.addEventListener('click', () => { isCert1Active = !isCert1Active; updateCertSlider(); });
+
+        // Touch Swipe Logic
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        certSliderContainer.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        certSliderContainer.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (Math.abs(touchEndX - touchStartX) > 50) { // 50px threshold for a valid swipe
+                isCert1Active = !isCert1Active; 
+                updateCertSlider();
+            }
+        });
+
+        // 6. SOLID FOLDER RACK STACK ANIMATION
         const cards = gsap.utils.toArray('.project-wrapper');
         cards.forEach((card, i) => {
             gsap.from(card, { y: 150, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 95%", end: "top 75%", scrub: 0.5 } });
@@ -622,10 +730,5 @@
             }
         });
     </script>
-
-<footer style="text-align:center; padding:20px; color:white;">
-  © 2025 Srijan Gangta. All Rights Reserved.
-</footer>
-
 </body>
 </html>
