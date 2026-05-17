@@ -29,7 +29,7 @@
             color: #f5f5f7;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            overscroll-behavior: none;
+            overscroll-behavior: none; /* Prevents bounce effects that cause white screens */
         }
         
         .font-serif { font-family: 'Playfair Display', serif; }
@@ -48,7 +48,7 @@
             opacity: 0; scale: 0.5;
             transition: opacity 0.3s, scale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            display: none; 
+            display: none; /* Default hidden */
         }
         @media (min-width: 768px) {
             .cursor-key { display: block; }
@@ -77,23 +77,15 @@
             z-index: 10;
         }
 
-        /* ---------------------------------------------------- */
-        /* OPTIMIZED TONY STARK 3D HOLOGRAPHIC CERTIFICATES     */
-        /* ---------------------------------------------------- */
+        /* TONY STARK 3D HOLOGRAPHIC CERTIFICATES CSS */
         .cert-glass-panel {
-            /* Solid background for mobile to prevent lag */
-            background: rgba(15, 2, 2, 0.95);
+            background: rgba(10, 1, 1, 0.85);
+            backdrop-filter: blur(10px); /* Reduced for mobile perf */
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 15px rgba(217, 56, 56, 0.1);
         }
-        
-        /* Blur and heavy effects only turn on for Desktop */
         @media (min-width: 768px) {
-            .cert-glass-panel {
-                background: rgba(10, 1, 1, 0.85);
-                backdrop-filter: blur(25px);
-                box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(217, 56, 56, 0.1);
-            }
+            .cert-glass-panel { backdrop-filter: blur(25px); }
         }
         
         .touch-pan-y { touch-action: pan-y pinch-zoom; }
@@ -103,25 +95,18 @@
             50% { opacity: 1; }
             100% { transform: translateY(500%); opacity: 0; }
         }
-        
-        /* Scanline disabled on mobile for performance */
-        .hologram-scan { display: none; }
-        
-        @media (min-width: 768px) {
-            .hologram-scan {
-                display: block;
-                position: absolute; top: 0; left: 0; right: 0; height: 10%;
-                background: linear-gradient(to bottom, transparent, rgba(217, 56, 56, 0.5), transparent);
-                animation: scanline 3s linear infinite;
-                z-index: 20; pointer-events: none;
-            }
+        .hologram-scan {
+            position: absolute; top: 0; left: 0; right: 0; height: 10%;
+            background: linear-gradient(to bottom, transparent, rgba(217, 56, 56, 0.5), transparent);
+            animation: scanline 3s linear infinite;
+            z-index: 20; pointer-events: none;
         }
 
         /* PERFECT FILE ORGANIZER RACK CSS */
         .project-section { padding-bottom: 10vh; }
         .project-wrapper {
             position: sticky;
-            margin-bottom: 15vh; 
+            margin-bottom: 15vh; /* Optimized for mobile */
             will-change: filter, transform; 
             z-index: var(--z-index); 
         }
@@ -222,12 +207,14 @@
                 </p>
                 
                 <div class="hero-btn">
-                    <a href="resume.pdf" download="Srijan_Gangta_Resume.pdf" class="group flex items-center gap-3 px-8 py-4 rounded-full border border-[#d93838]/40 bg-[#d93838]/10 hover:bg-[#d93838] text-white text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(217,56,56,0.2)] hover:shadow-[0_0_30px_rgba(217,56,56,0.6)] backdrop-blur-sm">
-                        <span>Download Resume</span>
-                        <div class="unlock-wrapper text-lg">
-                            <span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span>
-                        </div>
-                    </a>
+                    <div class="magnetic-wrap">
+                        <a href="resume.pdf" download="Srijan_Gangta_Resume.pdf" class="magnetic-item group flex items-center gap-3 px-8 py-4 rounded-full border border-[#d93838]/40 bg-[#d93838]/10 hover:bg-[#d93838] text-white text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(217,56,56,0.2)] hover:shadow-[0_0_30px_rgba(217,56,56,0.6)] backdrop-blur-sm">
+                            <span>Download Resume</span>
+                            <div class="unlock-wrapper text-lg">
+                                <span class="icon-lock">🔒</span><span class="icon-unlock">🔓</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -328,22 +315,22 @@
             
             <div class="absolute top-0 left-0 w-full h-full cert-slide" id="cert-card-1">
                 <div class="tilt-card w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group">
-                    <div class="w-full md:w-[45%] h-[35%] md:h-full p-4 md:p-6">
+                    <div class="w-full md:w-[45%] h-[40%] md:h-full p-4 md:p-6">
                         <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl bg-black">
                             <div class="hologram-scan"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
                             <img src="cert1.png" alt="Google Ads Cert" class="w-full h-full object-cover md:object-cover relative z-0 filter contrast-125 saturate-110">
                         </div>
                     </div>
-                    <div class="w-full md:w-[55%] h-[65%] md:h-full p-6 md:p-10 flex flex-col justify-center relative">
-                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-4 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div class="w-full md:w-[55%] h-[60%] md:h-full p-5 md:p-10 flex flex-col justify-center relative">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-3 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                         </svg>
-                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Ads Search<br><span class="italic text-gray-400 text-lg md:text-xl">Certification</span></h4>
-                        <p class="text-gray-400 text-[11px] md:text-sm mb-6 mt-4 max-w-sm leading-relaxed line-clamp-3 md:line-clamp-none">Recognized mastery in building, executing, and optimizing Google Search campaigns. Proven ability to architect strategies that drive measurable performance.</p>
+                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Ads Search<br><span class="italic text-gray-400 text-base md:text-xl">Certification</span></h4>
+                        <p class="text-gray-400 text-[11px] md:text-sm mb-4 md:mb-6 mt-2 max-w-sm leading-relaxed line-clamp-3 md:line-clamp-none">Recognized mastery in building, executing, and optimizing Google Search campaigns. Proven ability to architect strategies that drive measurable performance.</p>
                         <a href="#" class="pop-glow text-[#d93838] font-bold text-[10px] md:text-xs uppercase tracking-widest w-max mt-auto">Verify Credential ↗</a>
                     </div>
                 </div>
@@ -351,22 +338,22 @@
 
             <div class="absolute top-0 left-0 w-full h-full cert-slide" id="cert-card-2">
                 <div class="tilt-card w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group">
-                    <div class="w-full md:w-[45%] h-[35%] md:h-full p-4 md:p-6">
+                    <div class="w-full md:w-[45%] h-[40%] md:h-full p-4 md:p-6">
                         <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl bg-black">
                             <div class="hologram-scan"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
                             <img src="cert2.png" alt="Google Analytics Cert" class="w-full h-full object-cover md:object-cover relative z-0 filter contrast-125 saturate-110">
                         </div>
                     </div>
-                    <div class="w-full md:w-[55%] h-[65%] md:h-full p-6 md:p-10 flex flex-col justify-center relative">
-                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-4 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div class="w-full md:w-[55%] h-[60%] md:h-full p-5 md:p-10 flex flex-col justify-center relative">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-3 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                         </svg>
-                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Analytics 4<br><span class="italic text-gray-400 text-lg md:text-xl">Certification</span></h4>
-                        <p class="text-gray-400 text-[11px] md:text-sm mb-6 mt-4 max-w-sm leading-relaxed line-clamp-3 md:line-clamp-none">Official validation of advanced proficiency in leveraging GA4 to analyze digital behavior, track multi-channel funnels, and derive actionable growth insights.</p>
+                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Analytics 4<br><span class="italic text-gray-400 text-base md:text-xl">Certification</span></h4>
+                        <p class="text-gray-400 text-[11px] md:text-sm mb-4 md:mb-6 mt-2 max-w-sm leading-relaxed line-clamp-3 md:line-clamp-none">Official validation of advanced proficiency in leveraging GA4 to analyze digital behavior, track multi-channel funnels, and derive actionable growth insights.</p>
                         <a href="#" class="pop-glow text-[#d93838] font-bold text-[10px] md:text-xs uppercase tracking-widest w-max mt-auto">Verify Credential ↗</a>
                     </div>
                 </div>
@@ -489,7 +476,7 @@
     </section>
 
     <div class="w-full flex justify-center py-10 relative z-30 gs-fade-up">
-        <a href="#archive" class="pop-glow text-[#d93838] hover:text-white text-sm font-bold tracking-[0.2em] uppercase">
+        <a href="#archive" class="pop-glow text-[#d93838] text-sm font-bold tracking-[0.2em] uppercase">
             Explore Full Archive ↗
         </a>
     </div>
@@ -633,7 +620,8 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Desktop Only Setup for Vanilla Tilt to prevent Mobile Lag
+        // 1. Desktop Only Setup for Vanilla Tilt
+        // Disable on mobile to prevent performance lag
         if (window.innerWidth > 768) {
             VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
                 max: 3,
@@ -691,7 +679,7 @@
             gsap.fromTo(elem, { autoAlpha: 0, y: 50 }, { duration: 1, autoAlpha: 1, y: 0, ease: "power3.out", delay: parseFloat(delay), scrollTrigger: { trigger: elem, start: "top 85%" } });
         });
 
-        // 6. TONY STARK 3D CERTIFICATE SLIDER (HARDWARE ACCELERATED FOR MOBILE)
+        // 6. TONY STARK 3D CERTIFICATE SLIDER
         let isCert1Active = true;
         const cert1 = document.getElementById('cert-card-1');
         const cert2 = document.getElementById('cert-card-2');
@@ -701,20 +689,17 @@
 
         const isMobile = window.innerWidth < 768;
         const xOffset = isMobile ? "8%" : "15%";
-        // Less rotation on mobile to prevent layout thrashing
-        const rotOffset = isMobile ? 5 : 15; 
 
         gsap.set(cert1, { transformPerspective: 1500 });
         gsap.set(cert2, { transformPerspective: 1500 });
 
         function updateCertSlider() {
             if (isCert1Active) {
-                gsap.to(cert1, { x: "0%", scale: 1, rotationY: 0, opacity: 1, zIndex: 20, duration: 0.6, ease: "power2.out" });
-                // Only opacity change instead of filter:brightness for mobile performance
-                gsap.to(cert2, { x: xOffset, scale: 0.85, rotationY: -rotOffset, opacity: 0.4, zIndex: 10, duration: 0.6, ease: "power2.out" });
+                gsap.to(cert1, { x: "0%", scale: 1, rotationY: 0, filter: "brightness(1)", opacity: 1, zIndex: 20, duration: 0.8, ease: "power3.inOut" });
+                gsap.to(cert2, { x: xOffset, scale: 0.9, rotationY: -15, filter: "brightness(0.3)", opacity: 0.6, zIndex: 10, duration: 0.8, ease: "power3.inOut" });
             } else {
-                gsap.to(cert1, { x: `-${xOffset}`, scale: 0.85, rotationY: rotOffset, opacity: 0.4, zIndex: 10, duration: 0.6, ease: "power2.out" });
-                gsap.to(cert2, { x: "0%", scale: 1, rotationY: 0, opacity: 1, zIndex: 20, duration: 0.6, ease: "power2.out" });
+                gsap.to(cert1, { x: `-${xOffset}`, scale: 0.9, rotationY: 15, filter: "brightness(0.3)", opacity: 0.6, zIndex: 10, duration: 0.8, ease: "power3.inOut" });
+                gsap.to(cert2, { x: "0%", scale: 1, rotationY: 0, filter: "brightness(1)", opacity: 1, zIndex: 20, duration: 0.8, ease: "power3.inOut" });
             }
         }
         
@@ -728,19 +713,16 @@
         certSliderContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
         certSliderContainer.addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
-            if (Math.abs(touchEndX - touchStartX) > 40) { isCert1Active = !isCert1Active; updateCertSlider(); }
-        }, {passive: true});
+            if (Math.abs(touchEndX - touchStartX) > 50) { isCert1Active = !isCert1Active; updateCertSlider(); }
+        });
 
-        // 7. SOLID FOLDER RACK STACK ANIMATION (OPTIMIZED FOR MOBILE)
+        // 7. SOLID FOLDER RACK STACK ANIMATION (Optimized)
         const cards = gsap.utils.toArray('.project-wrapper');
         cards.forEach((card, i) => {
-            gsap.from(card, { y: 100, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 95%", end: "top 80%", scrub: 0.5 } });
+            gsap.from(card, { y: 150, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 95%", end: "top 75%", scrub: 0.5 } });
             if (i < cards.length - 1) {
-                // Reduced complexity: Just lower opacity to simulate shadow without layout reflows
                 gsap.to(card, {
-                    rotationX: isMobile ? 0 : -8, 
-                    opacity: 0.4, 
-                    transformOrigin: "bottom center",
+                    rotationX: -8, filter: "brightness(0.4)", transformOrigin: "bottom center",
                     scrollTrigger: { trigger: cards[i + 1], start: "top 85%", end: "top 15%", scrub: true }
                 });
             }
