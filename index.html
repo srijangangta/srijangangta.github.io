@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" style="background-color: #050101;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +29,7 @@
             color: #f5f5f7;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            overscroll-behavior: none; /* Prevents bounce effects that cause white screens */
         }
         
         .font-serif { font-family: 'Playfair Display', serif; }
@@ -39,7 +40,7 @@
         ::-webkit-scrollbar-thumb { background: #4a0808; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #d93838; }
 
-        /* Custom Key Cursor (Only visible in Contact Section) */
+        /* Custom Key Cursor (Only visible in Contact Section - hidden on mobile) */
         .cursor-key {
             position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
             transform: translate(-50%, -50%);
@@ -47,20 +48,24 @@
             opacity: 0; scale: 0.5;
             transition: opacity 0.3s, scale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            display: none; /* Default hidden */
+        }
+        @media (min-width: 768px) {
+            .cursor-key { display: block; }
         }
 
         /* Navbar */
         .glass-nav {
             background: rgba(5, 1, 1, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         /* Playful Skills Pill */
         .skill-pill {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
         }
@@ -72,50 +77,52 @@
             z-index: 10;
         }
 
-        /* ---------------------------------------------------- */
         /* TONY STARK 3D HOLOGRAPHIC CERTIFICATES CSS */
-        /* ---------------------------------------------------- */
         .cert-glass-panel {
-            background: rgba(10, 1, 1, 0.8);
-            backdrop-filter: blur(25px);
+            background: rgba(10, 1, 1, 0.85);
+            backdrop-filter: blur(10px); /* Reduced for mobile perf */
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(217, 56, 56, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 15px rgba(217, 56, 56, 0.1);
         }
-        /* Touch actions enabled for smooth swipe */
-        .touch-pan-y {
-            touch-action: pan-y pinch-zoom;
+        @media (min-width: 768px) {
+            .cert-glass-panel { backdrop-filter: blur(25px); }
         }
+        
+        .touch-pan-y { touch-action: pan-y pinch-zoom; }
+        
         @keyframes scanline {
             0% { transform: translateY(-100%); opacity: 0; }
             50% { opacity: 1; }
             100% { transform: translateY(500%); opacity: 0; }
         }
         .hologram-scan {
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 10%;
+            position: absolute; top: 0; left: 0; right: 0; height: 10%;
             background: linear-gradient(to bottom, transparent, rgba(217, 56, 56, 0.5), transparent);
             animation: scanline 3s linear infinite;
-            z-index: 20;
-            pointer-events: none;
+            z-index: 20; pointer-events: none;
         }
 
         /* PERFECT FILE ORGANIZER RACK CSS */
-        .project-section { padding-bottom: 20vh; }
+        .project-section { padding-bottom: 10vh; }
         .project-wrapper {
             position: sticky;
-            margin-bottom: 25vh; 
-            will-change: filter; 
+            margin-bottom: 15vh; /* Optimized for mobile */
+            will-change: filter, transform; 
             z-index: var(--z-index); 
         }
+        @media (min-width: 768px) {
+            .project-wrapper { margin-bottom: 25vh; }
+        }
+        
         .project-card-inner {
             background: #0d0202; 
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-top: 1px solid rgba(217, 56, 56, 0.3);
             border-radius: 1.5rem;
-            box-shadow: 0 -20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 -15px 30px rgba(0,0,0,0.8);
             overflow: hidden;
             display: flex;
-            flex-col;
+            flex-direction: column;
         }
         .folder-header {
             height: 6vh; 
@@ -124,12 +131,9 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             width: 100%;
         }
-
-        /* Magnetic Link Wrapper */
-        .magnetic-wrap { display: inline-block; padding: 10px; cursor: pointer; }
 
         /* PLAIN POP & GLOW TEXT */
         .pop-glow {
@@ -149,8 +153,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 1.5em; 
-            height: 1.5em;
+            width: 1.5em; height: 1.5em;
         }
         .unlock-wrapper .icon-lock, 
         .unlock-wrapper .icon-unlock {
@@ -165,10 +168,7 @@
         .group:hover .icon-unlock { opacity: 1; transform: scale(1); }
 
         .big-lock { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s; }
-        .group:hover .big-lock { 
-            transform: scale(1.3); 
-            filter: drop-shadow(0 0 25px rgba(217, 56, 56, 0.8)); 
-        }
+        .group:hover .big-lock { transform: scale(1.3); filter: drop-shadow(0 0 25px rgba(217, 56, 56, 0.8)); }
     </style>
 </head>
 <body class="antialiased selection:bg-[#d93838] selection:text-white">
@@ -303,64 +303,64 @@
         </div>
     </section>
 
-    <section id="certificates-section" class="py-24 px-6 md:px-20 relative bg-[#050101] border-b border-white/5 overflow-hidden flex flex-col items-center">
-        <div class="absolute w-[80vw] h-[80vw] bg-[#d93838]/10 blur-[150px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"></div>
+    <section id="certificates-section" class="py-20 md:py-24 px-4 md:px-20 relative bg-[#050101] border-b border-white/5 overflow-hidden flex flex-col items-center">
+        <div class="absolute w-[80vw] h-[80vw] bg-[#d93838]/5 md:bg-[#d93838]/10 blur-[150px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"></div>
         
-        <div class="text-center w-full z-30 mb-12 gs-fade-up">
-            <p class="text-[#d93838] tracking-[0.3em] uppercase text-xs font-bold mb-4">Official Credentials</p>
-            <h3 class="font-serif text-5xl md:text-7xl text-white tracking-tighter drop-shadow-2xl">Google <span class="italic text-[#d93838]">Certified</span></h3>
+        <div class="text-center w-full z-30 mb-8 md:mb-12 gs-fade-up">
+            <p class="text-[#d93838] tracking-[0.3em] uppercase text-xs font-bold mb-2 md:mb-4">Official Credentials</p>
+            <h3 class="font-serif text-4xl md:text-7xl text-white tracking-tighter drop-shadow-2xl">Google <span class="italic text-[#d93838]">Certified</span></h3>
         </div>
 
-        <div class="relative w-[95vw] md:w-[75vw] lg:w-[65vw] h-[75vh] md:h-[50vh] z-20 mx-auto gs-fade-up touch-pan-y" id="cert-stack-container" style="perspective: 1500px;">
+        <div class="relative w-[95vw] md:w-[75vw] lg:w-[65vw] h-[70vh] md:h-[50vh] z-20 mx-auto gs-fade-up touch-pan-y" id="cert-stack-container" style="perspective: 1500px;">
             
             <div class="absolute top-0 left-0 w-full h-full cert-slide" id="cert-card-1">
-                <div class="w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
-                    <div class="w-full md:w-[45%] h-[35%] md:h-full p-4 md:p-6">
-                        <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl">
+                <div class="tilt-card w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group">
+                    <div class="w-full md:w-[45%] h-[40%] md:h-full p-4 md:p-6">
+                        <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl bg-black">
                             <div class="hologram-scan"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
-                            <img src="cert1.png" alt="Google Ads Cert" class="w-full h-full object-cover relative z-0 filter contrast-125 saturate-110">
+                            <img src="cert1.png" alt="Google Ads Cert" class="w-full h-full object-cover md:object-cover relative z-0 filter contrast-125 saturate-110">
                         </div>
                     </div>
-                    <div class="w-full md:w-[55%] h-[65%] md:h-full p-6 md:p-10 flex flex-col justify-center relative">
-                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-4 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div class="w-full md:w-[55%] h-[60%] md:h-full p-5 md:p-10 flex flex-col justify-center relative">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-3 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                         </svg>
-                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Ads Search<br><span class="italic text-gray-400 text-lg md:text-xl">Certification</span></h4>
-                        <p class="text-gray-400 text-[11px] md:text-sm mb-6 mt-4 max-w-sm leading-relaxed">Recognized mastery in building, executing, and optimizing Google Search campaigns. Proven ability to architect strategies that drive measurable performance.</p>
+                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Ads Search<br><span class="italic text-gray-400 text-base md:text-xl">Certification</span></h4>
+                        <p class="text-gray-400 text-[11px] md:text-sm mb-4 md:mb-6 mt-2 max-w-sm leading-relaxed line-clamp-3 md:line-clamp-none">Recognized mastery in building, executing, and optimizing Google Search campaigns. Proven ability to architect strategies that drive measurable performance.</p>
                         <a href="#" class="pop-glow text-[#d93838] font-bold text-[10px] md:text-xs uppercase tracking-widest w-max mt-auto">Verify Credential ↗</a>
                     </div>
                 </div>
             </div>
 
             <div class="absolute top-0 left-0 w-full h-full cert-slide" id="cert-card-2">
-                <div class="w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
-                    <div class="w-full md:w-[45%] h-[35%] md:h-full p-4 md:p-6">
-                        <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl">
+                <div class="tilt-card w-full h-full cert-glass-panel rounded-[2rem] flex flex-col md:flex-row overflow-hidden group">
+                    <div class="w-full md:w-[45%] h-[40%] md:h-full p-4 md:p-6">
+                        <div class="w-full h-full rounded-xl overflow-hidden relative border border-white/10 shadow-2xl bg-black">
                             <div class="hologram-scan"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
-                            <img src="cert2.png" alt="Google Analytics Cert" class="w-full h-full object-cover relative z-0 filter contrast-125 saturate-110">
+                            <img src="cert2.png" alt="Google Analytics Cert" class="w-full h-full object-cover md:object-cover relative z-0 filter contrast-125 saturate-110">
                         </div>
                     </div>
-                    <div class="w-full md:w-[55%] h-[65%] md:h-full p-6 md:p-10 flex flex-col justify-center relative">
-                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-4 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div class="w-full md:w-[55%] h-[60%] md:h-full p-5 md:p-10 flex flex-col justify-center relative">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 mb-3 md:mb-6 drop-shadow-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                         </svg>
-                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Analytics 4<br><span class="italic text-gray-400 text-lg md:text-xl">Certification</span></h4>
-                        <p class="text-gray-400 text-[11px] md:text-sm mb-6 mt-4 max-w-sm leading-relaxed">Official validation of advanced proficiency in leveraging GA4 to analyze digital behavior, track multi-channel funnels, and derive actionable growth insights.</p>
+                        <h4 class="text-xl md:text-4xl font-serif text-white mb-2 leading-tight">Google Analytics 4<br><span class="italic text-gray-400 text-base md:text-xl">Certification</span></h4>
+                        <p class="text-gray-400 text-[11px] md:text-sm mb-4 md:mb-6 mt-2 max-w-sm leading-relaxed line-clamp-3 md:line-clamp-none">Official validation of advanced proficiency in leveraging GA4 to analyze digital behavior, track multi-channel funnels, and derive actionable growth insights.</p>
                         <a href="#" class="pop-glow text-[#d93838] font-bold text-[10px] md:text-xs uppercase tracking-widest w-max mt-auto">Verify Credential ↗</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="flex justify-center items-center gap-6 mt-12 z-30 gs-fade-up">
+        <div class="flex justify-center items-center gap-6 mt-8 md:mt-12 z-30 gs-fade-up">
             <button id="cert-prev" class="w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-[#d93838] hover:border-[#d93838] flex items-center justify-center transition-all duration-300 pop-glow">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             </button>
@@ -371,7 +371,7 @@
     </section>
 
     <section id="projects" class="project-section pt-32 px-4 md:px-12 max-w-6xl mx-auto relative z-30">
-        <div class="mb-24 px-4 text-center md:text-left gs-fade-up">
+        <div class="mb-16 md:mb-24 px-4 text-center md:text-left gs-fade-up">
             <h3 class="font-serif text-5xl md:text-7xl text-white tracking-tighter">Featured <span class="italic text-[#d93838]">Works</span></h3>
             <p class="text-gray-400 mt-4 text-sm tracking-widest uppercase">Scroll to explore the rack</p>
         </div>
@@ -385,13 +385,13 @@
                 <div class="p-6 md:p-12 flex flex-col md:flex-row gap-10 items-center justify-between">
                     <div class="w-full md:w-1/2 flex flex-col h-full z-10 relative">
                         <h4 class="font-medium text-3xl md:text-5xl text-white mb-6 tracking-tight">Lead Generation Through Google Ads </h4>
-                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8"> Achieved 28 targeted clicks with 672 impressions while maintaining an average CPC of ₹13.84 within a controlled budget</p>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8"> Achieved 28 targeted clicks with 672 impressions while maintaining an average CPC of ₹13.84 within a controlled budget.</p>
                         <div class="flex flex-wrap gap-2 mb-8">
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Campaign Strategy</span>
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Lead Gen</span>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                    <div class="w-full md:w-1/2 h-56 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
                         <img src="googleads.PNG" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
                     </div>
                 </div>
@@ -413,7 +413,7 @@
                             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase tracking-widest text-white">Funnel Strategies</span>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                    <div class="w-full md:w-1/2 h-56 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
                         <img src="metaads.jpg" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
                     </div>
                 </div>
@@ -440,7 +440,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                    <div class="w-full md:w-1/2 h-56 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
                         <img src="brightcourses.png" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
                     </div>
                 </div>
@@ -467,7 +467,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2 h-64 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                    <div class="w-full md:w-1/2 h-56 md:h-[45vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
                         <img src="brightcareerventure.PNG" class="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 transition-all duration-500">
                     </div>
                 </div>
@@ -476,7 +476,7 @@
     </section>
 
     <div class="w-full flex justify-center py-10 relative z-30 gs-fade-up">
-        <a href="#archive" class="pop-glow text-[#d93838] hover:text-white text-sm font-bold tracking-[0.2em] uppercase">
+        <a href="#archive" class="pop-glow text-[#d93838] text-sm font-bold tracking-[0.2em] uppercase">
             Explore Full Archive ↗
         </a>
     </div>
@@ -620,7 +620,18 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. CINEMATIC HERO ANIMATION
+        // 1. Desktop Only Setup for Vanilla Tilt
+        // Disable on mobile to prevent performance lag
+        if (window.innerWidth > 768) {
+            VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                max: 3,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2
+            });
+        }
+
+        // 2. CINEMATIC HERO ANIMATION
         let heroTl = gsap.timeline();
         heroTl.fromTo(".hero-tagline", { filter: "blur(10px)", opacity: 0, x: -20 }, { filter: "blur(0px)", opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.2 })
         .fromTo(".hero-title", { filter: "blur(20px)", opacity: 0, scale: 1.1 }, { filter: "blur(0px)", opacity: 1, scale: 1, duration: 1.5, ease: "expo.out" }, "-=0.5")
@@ -629,46 +640,46 @@
         .fromTo(".hero-img-wrapper", { rotationX: 45, opacity: 0, y: 100, transformPerspective: 1000 }, { rotationX: 0, opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }, "-=1.2")
         .to(".hero-nav", { opacity: 1, duration: 1 }, "-=1");
 
-        // 2. KEY CURSOR LOGIC ONLY IN FOOTER 
-        const cursorKey = document.querySelector('.cursor-key');
-        const footerSection = document.getElementById('contact');
+        // 3. KEY CURSOR LOGIC ONLY IN FOOTER (Disabled on Mobile)
+        if (window.innerWidth > 768) {
+            const cursorKey = document.querySelector('.cursor-key');
+            const footerSection = document.getElementById('contact');
 
-        window.addEventListener('mousemove', (e) => {
-            cursorKey.style.left = `${e.clientX}px`; 
-            cursorKey.style.top = `${e.clientY}px`;
-        });
+            window.addEventListener('mousemove', (e) => {
+                cursorKey.style.left = `${e.clientX}px`; 
+                cursorKey.style.top = `${e.clientY}px`;
+            });
 
-        footerSection.addEventListener('mouseenter', () => {
-            cursorKey.style.opacity = '1';
-            cursorKey.style.scale = '1';
-            footerSection.style.cursor = 'none'; 
+            footerSection.addEventListener('mouseenter', () => {
+                cursorKey.style.opacity = '1';
+                cursorKey.style.scale = '1';
+                footerSection.style.cursor = 'none'; 
+                const children = footerSection.querySelectorAll('*');
+                children.forEach(child => child.style.cursor = 'none');
+            });
             
-            const children = footerSection.querySelectorAll('*');
-            children.forEach(child => child.style.cursor = 'none');
-        });
-        
-        footerSection.addEventListener('mouseleave', () => {
-            cursorKey.style.opacity = '0';
-            cursorKey.style.scale = '0.5';
-            footerSection.style.cursor = 'auto'; 
-            
-            const children = footerSection.querySelectorAll('*');
-            children.forEach(child => child.style.cursor = '');
-        });
+            footerSection.addEventListener('mouseleave', () => {
+                cursorKey.style.opacity = '0';
+                cursorKey.style.scale = '0.5';
+                footerSection.style.cursor = 'auto'; 
+                const children = footerSection.querySelectorAll('*');
+                children.forEach(child => child.style.cursor = '');
+            });
+        }
 
-        // 3. Navbar Background reveal
+        // 4. Navbar Background reveal
         const nav = document.querySelector('.glass-nav');
         window.addEventListener('scroll', () => {
             nav.style.background = window.scrollY > 50 ? 'rgba(5, 1, 1, 0.8)' : 'rgba(5, 1, 1, 0.4)';
         });
 
-        // 4. Scroll Fade Up
+        // 5. Scroll Fade Up
         gsap.utils.toArray('.gs-fade-up').forEach(elem => {
             let delay = elem.getAttribute('data-delay') || 0;
             gsap.fromTo(elem, { autoAlpha: 0, y: 50 }, { duration: 1, autoAlpha: 1, y: 0, ease: "power3.out", delay: parseFloat(delay), scrollTrigger: { trigger: elem, start: "top 85%" } });
         });
 
-        // 5. TONY STARK 3D CERTIFICATE SLIDER (WITH TOUCH SWIPE & BUTTONS)
+        // 6. TONY STARK 3D CERTIFICATE SLIDER
         let isCert1Active = true;
         const cert1 = document.getElementById('cert-card-1');
         const cert2 = document.getElementById('cert-card-2');
@@ -676,7 +687,6 @@
         const prevBtn = document.getElementById('cert-prev');
         const certSliderContainer = document.getElementById('cert-stack-container');
 
-        // Check if mobile for dynamic offset
         const isMobile = window.innerWidth < 768;
         const xOffset = isMobile ? "8%" : "15%";
 
@@ -685,40 +695,28 @@
 
         function updateCertSlider() {
             if (isCert1Active) {
-                // Cert 1 Front, Cert 2 Back Right
                 gsap.to(cert1, { x: "0%", scale: 1, rotationY: 0, filter: "brightness(1)", opacity: 1, zIndex: 20, duration: 0.8, ease: "power3.inOut" });
                 gsap.to(cert2, { x: xOffset, scale: 0.9, rotationY: -15, filter: "brightness(0.3)", opacity: 0.6, zIndex: 10, duration: 0.8, ease: "power3.inOut" });
             } else {
-                // Cert 2 Front, Cert 1 Back Left
                 gsap.to(cert1, { x: `-${xOffset}`, scale: 0.9, rotationY: 15, filter: "brightness(0.3)", opacity: 0.6, zIndex: 10, duration: 0.8, ease: "power3.inOut" });
                 gsap.to(cert2, { x: "0%", scale: 1, rotationY: 0, filter: "brightness(1)", opacity: 1, zIndex: 20, duration: 0.8, ease: "power3.inOut" });
             }
         }
         
-        // Trigger initial state
         updateCertSlider();
 
-        // Button Clicks
         nextBtn.addEventListener('click', () => { isCert1Active = !isCert1Active; updateCertSlider(); });
         prevBtn.addEventListener('click', () => { isCert1Active = !isCert1Active; updateCertSlider(); });
 
-        // Touch Swipe Logic
         let touchStartX = 0;
         let touchEndX = 0;
-
-        certSliderContainer.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-
+        certSliderContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
         certSliderContainer.addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
-            if (Math.abs(touchEndX - touchStartX) > 50) { // 50px threshold for a valid swipe
-                isCert1Active = !isCert1Active; 
-                updateCertSlider();
-            }
+            if (Math.abs(touchEndX - touchStartX) > 50) { isCert1Active = !isCert1Active; updateCertSlider(); }
         });
 
-        // 6. SOLID FOLDER RACK STACK ANIMATION
+        // 7. SOLID FOLDER RACK STACK ANIMATION (Optimized)
         const cards = gsap.utils.toArray('.project-wrapper');
         cards.forEach((card, i) => {
             gsap.from(card, { y: 150, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 95%", end: "top 75%", scrub: 0.5 } });
